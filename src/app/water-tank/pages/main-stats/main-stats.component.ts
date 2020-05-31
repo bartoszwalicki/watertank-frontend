@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MeasurmentsService } from '../../services/measurments/measurments.service';
 import { MeasurmentType } from '../../enums/measurment-type.enum';
 import { TimeWindow } from '../../enums/time-window.enum';
+import { Observable, Subject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { MeasurmentReponse } from '../../interfaces/measurment-response.interface';
 
 @Component({
   selector: 'app-main-stats',
@@ -9,19 +12,25 @@ import { TimeWindow } from '../../enums/time-window.enum';
   styleUrls: ['./main-stats.component.scss'],
 })
 export class MainStatsComponent implements OnInit {
-  constructor(private measurmentService: MeasurmentsService) {}
+  public singleMeasurment$: Subject<MeasurmentReponse>;
+  public measurmentArray$: Subject<Array<MeasurmentReponse>>;
+
+  constructor(private measurmentService: MeasurmentsService) {
+    this.singleMeasurment$ = new Subject();
+    this.measurmentArray$ = new Subject();
+  }
 
   ngOnInit(): void {
     this.measurmentService
       .getMeasurment(0, MeasurmentType.temperature)
-      .subscribe((data) => console.log(data));
-
-    this.measurmentService
-      .getMeasurment(0, MeasurmentType.temperature, TimeWindow.week)
-      .subscribe((data) => console.log(data));
-
-    this.measurmentService
-      .getMeasurment(0, MeasurmentType.temperature, TimeWindow.month)
-      .subscribe((data) => console.log(data));
+      .pipe(
+        tap((measurmentArray) => {
+          this.measurmentArray$.next(measurmentArray);
+        }),
+        tap((measurmentArray) => {
+          this.singleMeasurment$.next(measurmentArray.pop());
+        })
+      )
+      .subscribe();
   }
 }
