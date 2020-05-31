@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { InfluxDbService } from './influx-db.service';
+import { MeasurmentsService } from './measurments.service';
 
-describe('InfluxDbService', () => {
-  let service: InfluxDbService;
+describe('MeasurmentsService', () => {
+  let service: MeasurmentsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(InfluxDbService);
+    service = TestBed.inject(MeasurmentsService);
   });
 
   it('should be created', () => {
