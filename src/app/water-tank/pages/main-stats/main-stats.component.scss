@@ -1,6 +1,15 @@
 .main-stats {
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+}
+
+app-single-stat {
+  height: 40vh;
+}
+
+app-chart-with-time-scope {
+  height: 40vh;
 }

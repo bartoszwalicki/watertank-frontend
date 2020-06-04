@@ -1,3 +1,7 @@
-<h1 *ngIf="singleMeasurment | async as measurment">
-  {{ roundData(measurment.value) }}
-</h1>
+<div class="single-stat" *ngIf="singleMeasurment | async as measurment">
+  <div class="tank-graphic">
+    <div class="water-level"></div>
+  </div>
+
+  <div class="text-value">{{ measurment.waterLevel }}</div>
+</div>

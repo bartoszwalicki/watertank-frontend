@@ -1,8 +1,4 @@
 <div class="main-stats">
-  <app-single-stat [singleMeasurment]="singleMeasurment$"></app-single-stat>
-
-  <app-chart-with-time-scope
-    [inputData]="measurmentArray$"
-    (timeWindowChangedEvent)="getNewDataInTimeWindow($event)"
-  ></app-chart-with-time-scope>
+  <app-single-stat [tankId]="0"></app-single-stat>
+  <app-single-stat [tankId]="1"></app-single-stat>
 </div>

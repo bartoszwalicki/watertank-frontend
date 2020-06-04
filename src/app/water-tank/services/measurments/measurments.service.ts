@@ -7,6 +7,7 @@ import { MeasurmentType } from '../../enums/measurment-type.enum';
 import { TimeWindow } from '../../enums/time-window.enum';
 import { MeasurmentReponse } from '../../interfaces/measurment-response.interface';
 import { map } from 'rxjs/operators';
+import { LastMeasurmentReponse } from 'api/interfaces/last-measurment-response.interface copy';
 
 @Injectable({
   providedIn: 'root',
@@ -14,12 +15,9 @@ import { map } from 'rxjs/operators';
 export class MeasurmentsService {
   constructor(private httpClient: HttpClient) {}
 
-  public getLastMeasurment(
-    tankId: number,
-    measurmentType: MeasurmentType
-  ): Observable<MeasurmentReponse> {
+  public getLastMeasurment(tankId: number): Observable<LastMeasurmentReponse> {
     return this.httpClient
-      .get<any>(`/api/lastMetric?tankId=${tankId}&metric=${measurmentType}`)
+      .get<any>(`/api/lastMetric?tankId=${tankId}`)
       .pipe(map((lastData) => lastData.data));
   }
 

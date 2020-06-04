@@ -1,38 +1,27 @@
 import { InfluxDB, FluxTableMetaData } from '@influxdata/influxdb-client';
 
 import { url, token, org } from './env';
-
-import { MeasurmentType } from './enums/measurment-type.enum';
-import { MeasurmentReponse } from './interfaces/measurment-response.interface';
+import { LastMeasurmentReponse } from './interfaces/last-measurment-response.interface copy';
 
 /**
  * @param tankId  Tank ID, currently available 0 or 1.
- * @param field metric to return - `w` - waterlevel from cap in mm or `t` - temperature in celcius.
  *
  * @returns Last metric
  */
 
 module.exports = (req, res) => {
   const tankId: number = Number.parseInt(req.query.tankId, 10);
-  const metric: MeasurmentType = req.query.metric;
 
   const queryApi = new InfluxDB({ url, token }).getQueryApi(org);
-  const fluxQuery = buildQuery(metric, tankId);
+  const fluxQuery = buildQuery(tankId);
 
-  let result: MeasurmentReponse;
+  const returnObjects = [];
 
   queryApi.queryRows(fluxQuery, {
     next(row: string[], tableMeta: FluxTableMetaData) {
       const dataObject = tableMeta.toObject(row);
 
-      const measurment = {
-        field: dataObject._field,
-        tankId: dataObject.tank,
-        time: dataObject._time ? dataObject._time : dataObject._stop,
-        value: dataObject._value,
-      } as MeasurmentReponse;
-
-      result = measurment;
+      returnObjects.push(dataObject);
     },
     error(error: Error) {
       res.status(500);
@@ -42,6 +31,18 @@ module.exports = (req, res) => {
       });
     },
     complete() {
+      const result = {} as LastMeasurmentReponse;
+      returnObjects.forEach((meas) => {
+        result.tankId = tankId;
+        result.time = meas._time;
+        if (meas._field === 'w') {
+          result.waterLevel = meas._value;
+        }
+        if (meas._field === 't') {
+          result.temperature = meas._value;
+        }
+      });
+
       return res.json({
         data: result,
       });
@@ -49,11 +50,10 @@ module.exports = (req, res) => {
   });
 };
 
-function buildQuery(metric: MeasurmentType, tankId: number) {
+function buildQuery(tankId: number) {
   const query = `from(bucket:"watertank")
   |> range(start: -1m)
   |> filter(fn: (r) => r._measurement == "waterlevel")
-  |> filter(fn: (r) => r["_field"] == "${metric}")
   |> filter(fn: (r) => r["tank"] == "${tankId}")
   |> last()`;
 

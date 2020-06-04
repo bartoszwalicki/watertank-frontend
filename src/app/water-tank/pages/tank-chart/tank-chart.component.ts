@@ -1,31 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-
+import { MeasurmentType } from 'api/enums/measurment-type.enum';
+import { TimeWindow } from 'api/enums/time-window.enum';
+import { MeasurmentReponse } from 'api/interfaces/measurment-response.interface';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-
-import { MeasurmentType } from '../../enums/measurment-type.enum';
-import { TimeWindow } from '../../enums/time-window.enum';
-
-import { MeasurmentsService } from '../../services/measurments/measurments.service';
-
 import { MeasurmentRequest } from '../../interfaces/measurment-request.interface';
-import { MeasurmentReponse } from '../../interfaces/measurment-response.interface';
+import { MeasurmentsService } from '../../services/measurments/measurments.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-main-stats',
-  templateUrl: './main-stats.component.html',
-  styleUrls: ['./main-stats.component.scss'],
+  selector: 'app-tank-chart',
+  templateUrl: './tank-chart.component.html',
+  styleUrls: ['./tank-chart.component.scss'],
 })
-export class MainStatsComponent implements OnInit {
-  public measurmentArray$: Subject<Array<MeasurmentReponse>>;
+export class TankChartComponent implements OnInit {
+  public waterMeasurmentArray$: Subject<Array<MeasurmentReponse>>;
 
   private queryOptions: MeasurmentRequest;
   private refreshData$: BehaviorSubject<MeasurmentRequest>;
 
-  constructor(private measurmentService: MeasurmentsService) {
-    this.measurmentArray$ = new Subject();
+  constructor(
+    private measurmentService: MeasurmentsService,
+    private route: ActivatedRoute
+  ) {
+    this.waterMeasurmentArray$ = new Subject();
     this.queryOptions = {
-      tankId: 0,
+      tankId: this.route.snapshot.params.tankId,
       measurmentType: MeasurmentType.waterLevel,
       timeWindow: TimeWindow.day,
     };
@@ -43,7 +43,7 @@ export class MainStatsComponent implements OnInit {
           );
         }),
         tap((measurmentArray) => {
-          this.measurmentArray$.next(measurmentArray);
+          this.waterMeasurmentArray$.next(measurmentArray);
         })
       )
       .subscribe();

@@ -14,9 +14,15 @@
     margin-bottom: 2em;
 
     label {
-      display: block;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       + label {
         margin-left: 10px;
+      }
+
+      input {
+        margin-right: 5px;
       }
     }
   }
