@@ -1,9 +1,13 @@
 <div class="main-stats">
   <div class="water-section">
-    <app-single-stat [tankId]="0"></app-single-stat>
+    <app-single-stat
+      [singleMeasurment$]="singleMeasurmentTank0$"
+    ></app-single-stat>
   </div>
 
   <div class="water-section">
-    <app-single-stat [tankId]="1"></app-single-stat>
+    <app-single-stat
+      [singleMeasurment$]="singleMeasurmentTank1$"
+    ></app-single-stat>
   </div>
 </div>
