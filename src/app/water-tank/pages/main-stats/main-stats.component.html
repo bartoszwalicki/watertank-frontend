@@ -1,13 +1,45 @@
+<mat-toolbar color="primary">
+  Pomiary
+  <button
+    class="refresh-data-button"
+    (click)="refreshData()"
+    mat-icon-button
+    aria-label="Odświerz dane"
+  >
+    <mat-icon>refresh</mat-icon>
+  </button></mat-toolbar
+>
+
 <div class="main-stats">
-  <div class="water-section">
+  <div class="water-section" *ngIf="singleMeasurmentTank0$">
+    <h2 class="title">Zbiornik 1</h2>
     <app-single-stat
       [singleMeasurment$]="singleMeasurmentTank0$"
     ></app-single-stat>
+
+    <button
+      class="show-charts-button"
+      (click)="showCharts(0)"
+      mat-icon-button
+      aria-label="Pokaż wykresy"
+    >
+      <mat-icon>show_chart</mat-icon> Pokaż wykresy
+    </button>
   </div>
 
-  <div class="water-section">
+  <div class="water-section" *ngIf="singleMeasurmentTank1$">
+    <h2 class="title">Zbiornik 2</h2>
     <app-single-stat
       [singleMeasurment$]="singleMeasurmentTank1$"
     ></app-single-stat>
+
+    <button
+      class="show-charts-button"
+      (click)="showCharts(1)"
+      mat-icon-button
+      aria-label="Pokaż wykresy"
+    >
+      <mat-icon>show_chart</mat-icon> Pokaż wykresy
+    </button>
   </div>
 </div>

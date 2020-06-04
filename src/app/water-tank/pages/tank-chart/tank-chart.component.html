@@ -1,3 +1,15 @@
+<mat-toolbar color="primary">
+  <button
+    class="refresh-data-button"
+    (click)="backToMainPage()"
+    mat-icon-button
+    aria-label="Powrót"
+  >
+    <mat-icon>arrow_back</mat-icon>
+    Powrót
+  </button>
+</mat-toolbar>
+
 <app-chart-with-time-scope
   [inputData]="waterMeasurmentArray$"
   (timeWindowChangedEvent)="getNewDataInTimeWindow($event)"

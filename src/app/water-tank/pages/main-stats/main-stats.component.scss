@@ -1,12 +1,52 @@
 .main-stats {
-  height: 100vh;
+  height: calc(100vh - 74px);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
 }
 
-app-single-stat {
-  height: 60vh;
-  margin: 10px;
+.water-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .title {
+    font-size: 2em;
+  }
+
+  app-single-stat {
+    height: 60vh;
+    margin: 10px;
+    margin-bottom: 30px;
+  }
+}
+
+.refresh-data-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+
+  mat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+    line-height: 40px;
+  }
+}
+
+.show-charts-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+
+  mat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+    line-height: 40px;
+  }
 }

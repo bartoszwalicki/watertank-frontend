@@ -4,6 +4,7 @@ import { LastMeasurmentReponse } from 'api/interfaces/last-measurment-response.i
 import { MeasurmentsService } from '../../services/measurments/measurments.service';
 import { Subject, zip, BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-stats',
@@ -15,7 +16,10 @@ export class MainStatsComponent implements OnInit {
   public singleMeasurmentTank1$: Subject<LastMeasurmentReponse>;
   public refreshData$: BehaviorSubject<void>;
 
-  constructor(private measurmentService: MeasurmentsService) {
+  constructor(
+    private measurmentService: MeasurmentsService,
+    private router: Router
+  ) {
     this.singleMeasurmentTank0$ = new Subject();
     this.singleMeasurmentTank1$ = new Subject();
     this.refreshData$ = new BehaviorSubject(null);
@@ -25,7 +29,13 @@ export class MainStatsComponent implements OnInit {
     this.initData();
   }
 
-  public refreshData(): void {}
+  public refreshData(): void {
+    this.refreshData$.next();
+  }
+
+  public showCharts(tankId: number): void {
+    this.router.navigate([`chart/${tankId}`]);
+  }
 
   private initData() {
     this.refreshData$

@@ -6,7 +6,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { MeasurmentRequest } from '../../interfaces/measurment-request.interface';
 import { MeasurmentsService } from '../../services/measurments/measurments.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-tank-chart',
@@ -21,7 +21,8 @@ export class TankChartComponent implements OnInit {
 
   constructor(
     private measurmentService: MeasurmentsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.waterMeasurmentArray$ = new Subject();
     this.queryOptions = {
@@ -47,6 +48,10 @@ export class TankChartComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  public backToMainPage(): void {
+    this.router.navigate(['']);
   }
 
   public getNewDataInTimeWindow(timeWindow: TimeWindow): void {
