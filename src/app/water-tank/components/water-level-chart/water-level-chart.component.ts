@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MeasurmentReponse } from '../../interfaces/measurment-response.interface';
 import { ChartData } from '../../interfaces/chart-data.interface';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-water-level-chart',
@@ -11,53 +12,54 @@ import { ChartData } from '../../interfaces/chart-data.interface';
 export class WaterLevelChartComponent implements OnInit {
   @Input() private inputData: Observable<Array<MeasurmentReponse>>;
 
-  chartData: ChartData[];
+  waterLevelChartData: ChartData[];
+  temperatureChartData: ChartData[];
 
   legend: boolean;
   showLabels: boolean;
   animations: boolean;
-  xAxis: boolean;
-  yAxis: boolean;
-  showYAxisLabel: boolean;
-  showXAxisLabel: boolean;
   xAxisLabel: string;
-  yAxisLabel: string;
-  timeline: boolean;
 
-  colorScheme: { domain: Array<string> };
+  colorSchemeWaterLevel: { domain: Array<string> };
+  colorSchemeTemperature: { domain: Array<string> };
 
   constructor() {
     this.legend = false;
     this.showLabels = true;
     this.animations = true;
-    this.xAxis = true;
-    this.yAxis = true;
-    this.showYAxisLabel = true;
-    this.showXAxisLabel = true;
     this.xAxisLabel = 'Czas';
-    this.yAxisLabel = 'Poziom wody';
-    this.timeline = true;
-    this.colorScheme = {
-      domain: [
-        '#5AA454',
-        '#E44D25',
-        '#CFC0BB',
-        '#7aa3e5',
-        '#a8385d',
-        '#aae3f5',
-      ],
+    this.colorSchemeWaterLevel = {
+      domain: ['#5AA454'],
+    };
+    this.colorSchemeTemperature = {
+      domain: ['#fc6603'],
     };
   }
 
   ngOnInit(): void {
     this.inputData.subscribe((dataArray) => {
-      const tmp = [];
-      const tmp2 = [];
-      dataArray.forEach((element) => {
-        tmp.push({ name: new Date(element.time), value: element.value });
+      let tmp = [];
+      let tmp2 = [];
+
+      const waterLevelData = dataArray.filter((elem) => elem.waterLevel);
+      const temperatureData = dataArray.filter((elem) => elem.temperature);
+
+      waterLevelData.forEach((element) => {
+        tmp.push({ name: new Date(element.time), value: element.waterLevel });
       });
       tmp2.push({ name: 'Poziom wody', series: tmp });
-      this.chartData = tmp2;
+
+      this.waterLevelChartData = tmp2;
+
+      tmp = [];
+      tmp2 = [];
+
+      temperatureData.forEach((element) => {
+        tmp.push({ name: new Date(element.time), value: element.temperature });
+      });
+      tmp2.push({ name: 'Temperatura', series: tmp });
+
+      this.temperatureChartData = tmp2;
     });
   }
 }

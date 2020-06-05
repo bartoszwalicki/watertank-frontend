@@ -23,13 +23,10 @@ export class MeasurmentsService {
 
   public getMeasurment(
     tankId: number,
-    measurmentType: MeasurmentType,
     timeWindow: TimeWindow = TimeWindow.day
   ): Observable<Array<MeasurmentReponse>> {
     return this.httpClient
-      .get<any>(
-        `/api/metrics?tankId=${tankId}&metric=${measurmentType}&timeWindow=${timeWindow}`
-      )
+      .get<any>(`/api/metrics?tankId=${tankId}&timeWindow=${timeWindow}`)
       .pipe(map((arrayData) => arrayData.data));
   }
 }

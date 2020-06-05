@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MeasurmentType } from 'api/enums/measurment-type.enum';
 import { TimeWindow } from 'api/enums/time-window.enum';
 import { MeasurmentReponse } from 'api/interfaces/measurment-response.interface';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -27,7 +26,6 @@ export class TankChartComponent implements OnInit {
     this.waterMeasurmentArray$ = new Subject();
     this.queryOptions = {
       tankId: this.route.snapshot.params.tankId,
-      measurmentType: MeasurmentType.waterLevel,
       timeWindow: TimeWindow.day,
     };
     this.refreshData$ = new BehaviorSubject(this.queryOptions);
@@ -39,7 +37,6 @@ export class TankChartComponent implements OnInit {
         switchMap((queryOpt) => {
           return this.measurmentService.getMeasurment(
             queryOpt.tankId,
-            queryOpt.measurmentType,
             queryOpt.timeWindow
           );
         }),

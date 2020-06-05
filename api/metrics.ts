@@ -2,13 +2,11 @@ import { InfluxDB, FluxTableMetaData } from '@influxdata/influxdb-client';
 
 import { url, token, org } from './env';
 
-import { MeasurmentType } from './enums/measurment-type.enum';
 import { TimeWindow } from './enums/time-window.enum';
 import { MeasurmentReponse } from './interfaces/measurment-response.interface';
 
 /**
  * @param tankId  Tank ID, currently available 0 or 1.
- * @param metric Metric to return - `w` - waterlevel from cap in mm or `t` - temperature in celcius.
  * @param timeWindow Time window.
  *
  * @returns Array of measurment objects
@@ -16,26 +14,18 @@ import { MeasurmentReponse } from './interfaces/measurment-response.interface';
 
 module.exports = (req, res) => {
   const tankId: number = Number.parseInt(req.query.tankId, 10);
-  const metric: MeasurmentType = req.query.metric;
   const timeWindow: TimeWindow = req.query.timeWindow;
 
   const queryApi = new InfluxDB({ url, token }).getQueryApi(org);
-  const fluxQuery = buildQuery(timeWindow, metric, tankId);
+  const fluxQuery = buildQuery(timeWindow, tankId);
 
-  const resultTable: Array<MeasurmentReponse> = [];
+  const returnObjects = [];
 
   queryApi.queryRows(fluxQuery, {
     next(row: string[], tableMeta: FluxTableMetaData) {
       const dataObject = tableMeta.toObject(row);
 
-      const measurment = {
-        field: dataObject._field,
-        tankId: dataObject.tank,
-        time: dataObject._time ? dataObject._time : dataObject._stop,
-        value: dataObject._value,
-      } as MeasurmentReponse;
-
-      resultTable.push(measurment);
+      returnObjects.push(dataObject);
     },
     error(error: Error) {
       res.status(500);
@@ -45,6 +35,25 @@ module.exports = (req, res) => {
       });
     },
     complete() {
+      const resultTable: Array<MeasurmentReponse> = [];
+
+      returnObjects.forEach((meas) => {
+        const singleResult = {} as MeasurmentReponse;
+
+        singleResult.tankId = tankId;
+        singleResult.time = meas._time ? meas._time : meas._stop;
+        if (meas._field === 'w') {
+          singleResult.field = 'w';
+          singleResult.waterLevel = meas._value;
+        }
+        if (meas._field === 't') {
+          singleResult.field = 't';
+          singleResult.temperature = meas._value;
+        }
+
+        resultTable.push(singleResult);
+      });
+
       return res.json({
         data: resultTable,
       });
@@ -52,15 +61,10 @@ module.exports = (req, res) => {
   });
 };
 
-function buildQuery(
-  timeWindow: TimeWindow,
-  metric: MeasurmentType,
-  tankId: number
-) {
+function buildQuery(timeWindow: TimeWindow, tankId: number) {
   const query = `from(bucket:"watertank")
   |> range(start: -${timeWindow})
   |> filter(fn: (r) => r._measurement == "waterlevel")
-  |> filter(fn: (r) => r["_field"] == "${metric}")
   |> filter(fn: (r) => r["tank"] == "${tankId}")`;
 
   switch (timeWindow) {
