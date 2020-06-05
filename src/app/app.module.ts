@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 
 import localePl from '@angular/common/locales/pl';
 import { registerLocaleData } from '@angular/common';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 registerLocaleData(localePl, 'pl-PL');
 
@@ -20,6 +22,7 @@ registerLocaleData(localePl, 'pl-PL');
     HttpClientModule,
     NgxChartsModule,
     BrowserAnimationsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent],
