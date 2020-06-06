@@ -10,7 +10,11 @@
   </button>
 </mat-toolbar>
 
-<app-chart-with-time-scope
-  [inputData]="waterMeasurmentArray$"
-  (timeWindowChangedEvent)="getNewDataInTimeWindow($event)"
-></app-chart-with-time-scope>
+<div class="chart-area" [class.loading]="isLoading">
+  <app-loader *ngIf="isLoading"></app-loader>
+
+  <app-chart-with-time-scope
+    [inputData]="waterMeasurmentArray$"
+    (timeWindowChangedEvent)="getNewDataInTimeWindow($event)"
+  ></app-chart-with-time-scope>
+</div>

@@ -4,6 +4,13 @@
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
+  padding-top: 10px;
+
+  &.loading {
+    .water-section {
+      display: none;
+    }
+  }
 }
 
 .water-section {

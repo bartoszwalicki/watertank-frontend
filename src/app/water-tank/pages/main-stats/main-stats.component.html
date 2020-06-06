@@ -10,7 +10,8 @@
   </button></mat-toolbar
 >
 
-<div class="main-stats">
+<div class="main-stats" [class.loading]="isLoading">
+  <app-loader *ngIf="isLoading"></app-loader>
   <div class="water-section">
     <h2 class="title">Zbiornik 1</h2>
     <app-single-stat

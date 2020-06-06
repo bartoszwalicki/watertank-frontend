@@ -1,0 +1,11 @@
+.chart-area {
+  display: block;
+  width: 100%;
+  height: calc(100% - 64px);
+
+  &.loading {
+    app-chart-with-time-scope {
+      display: none;
+    }
+  }
+}

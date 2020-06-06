@@ -14,6 +14,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartWithTimeScopeComponent } from './components/chart-with-time-scope/chart-with-time-scope.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { TankChartComponent } from './pages/tank-chart/tank-chart.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { TankChartComponent } from './pages/tank-chart/tank-chart.component';
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
+    SharedModule,
   ],
 })
 export class WaterTankModule {}
