@@ -2,14 +2,13 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MeasurmentReponse } from '../../interfaces/measurment-response.interface';
 import { ChartData } from '../../interfaces/chart-data.interface';
-import { filter, map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-water-level-chart',
-  templateUrl: './water-level-chart.component.html',
-  styleUrls: ['./water-level-chart.component.scss'],
+  selector: 'app-chart',
+  templateUrl: './chart.component.html',
+  styleUrls: ['./chart.component.scss'],
 })
-export class WaterLevelChartComponent implements OnInit {
+export class ChartComponent implements OnInit {
   @Input() private inputData: Observable<Array<MeasurmentReponse>>;
 
   waterLevelChartData: ChartData[];

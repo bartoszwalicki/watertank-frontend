@@ -12,7 +12,7 @@ import { MainStatsComponent } from './pages/main-stats/main-stats.component';
 import { SingleStatComponent } from './components/single-stat/single-stat.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartWithTimeScopeComponent } from './components/chart-with-time-scope/chart-with-time-scope.component';
-import { WaterLevelChartComponent } from './components/water-level-chart/water-level-chart.component';
+import { ChartComponent } from './components/chart/chart.component';
 import { TankChartComponent } from './pages/tank-chart/tank-chart.component';
 
 @NgModule({
@@ -21,7 +21,7 @@ import { TankChartComponent } from './pages/tank-chart/tank-chart.component';
     MainStatsComponent,
     SingleStatComponent,
     ChartWithTimeScopeComponent,
-    WaterLevelChartComponent,
+    ChartComponent,
     TankChartComponent,
   ],
   imports: [
