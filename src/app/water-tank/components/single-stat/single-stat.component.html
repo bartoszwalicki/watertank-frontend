@@ -1,6 +1,6 @@
 <div class="single-stat" *ngIf="singleMeasurment$ | async as measurment">
   <div class="tank-graphic">
-    <div class="water-level"></div>
+    <div class="water-level" [style.height]="measurment.waterLevel + '%'"></div>
   </div>
 
   <div class="text-value">

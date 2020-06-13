@@ -12,15 +12,16 @@
 
 <div class="main-stats" [class.loading]="isLoading">
   <app-loader *ngIf="isLoading"></app-loader>
+
   <div class="water-section">
-    <h2 class="title">Zbiornik 1</h2>
+    <h2 class="title">Zb. lewy</h2>
     <app-single-stat
-      [singleMeasurment$]="singleMeasurmentTank0$"
+      [singleMeasurment$]="singleMeasurmentTank1$"
     ></app-single-stat>
 
     <button
       class="show-charts-button"
-      (click)="showCharts(0)"
+      (click)="showCharts(1)"
       mat-icon-button
       aria-label="Pokaż wykresy"
     >
@@ -29,14 +30,14 @@
   </div>
 
   <div class="water-section">
-    <h2 class="title">Zbiornik 2</h2>
+    <h2 class="title">Zb. Prawy</h2>
     <app-single-stat
-      [singleMeasurment$]="singleMeasurmentTank1$"
+      [singleMeasurment$]="singleMeasurmentTank0$"
     ></app-single-stat>
 
     <button
       class="show-charts-button"
-      (click)="showCharts(1)"
+      (click)="showCharts(0)"
       mat-icon-button
       aria-label="Pokaż wykresy"
     >
