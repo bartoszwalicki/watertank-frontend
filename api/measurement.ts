@@ -11,11 +11,15 @@ module.exports = (req, res) => {
 
   if (securityCode !== 467467) {
     res.status = 401;
-    return res;
+    return res.json({
+      status: 'unauthorized',
+    });
   }
 
   console.log(`Measurement ${tankId}: ${measurementMm} mm`);
 
   res.status = 200;
-  return res;
+  return res.json({
+    status: 'success',
+  });
 };
