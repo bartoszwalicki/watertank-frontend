@@ -1,24 +1,18 @@
-/**
- * @param tankId  Tank ID, currently available 0 or 1.
- * @param measurement  Measurement in mm.
- * @returns Last metric
- */
-
 module.exports = (req, res) => {
   const securityCode: number = Number.parseInt(req.query.security, 10);
-  const tankId: number = Number.parseInt(req.query.tankId, 10);
-  const measurementMm: number = Number.parseInt(req.query.measurement, 10);
+  const tank1MeasMm: number = Number.parseInt(req.query.tank1Meas, 10);
+  const tank2MeasMm: number = Number.parseInt(req.query.tank2Meas, 10);
 
   if (securityCode !== 467467) {
-    res.status = 401;
-    return res.json({
+    return res.status(401).json({
       status: 'unauthorized',
     });
   }
 
-  console.log(`Measurement ${tankId}: ${measurementMm} mm`);
+  console.log(
+    `Measurement tank 1 ${tank1MeasMm} mm\n\rMeasurement tank 2 ${tank2MeasMm} mm`
+  );
 
-  res.status = 200;
   return res.json({
     status: 'success',
   });
