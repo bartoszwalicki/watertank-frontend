@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
@@ -16,9 +16,9 @@ export class ChartWithTimeScopeComponent implements OnInit {
 
   @Output() public timeWindowChangedEvent: EventEmitter<TimeWindow>;
 
-  public timeWindowForm: FormGroup;
+  public timeWindowForm: UntypedFormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: UntypedFormBuilder) {
     this.timeWindowChangedEvent = new EventEmitter<TimeWindow>();
   }
 
