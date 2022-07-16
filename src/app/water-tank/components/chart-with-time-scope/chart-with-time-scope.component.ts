@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
-import { MeasurmentReponse } from '../../interfaces/measurment-response.interface';
 import { TimeWindow } from '../../enums/time-window.enum';
+import { MeasurementResponse } from '../../interfaces/measurement-response.interface';
 
 @Component({
   selector: 'app-chart-with-time-scope',
@@ -12,7 +12,7 @@ import { TimeWindow } from '../../enums/time-window.enum';
   styleUrls: ['./chart-with-time-scope.component.scss'],
 })
 export class ChartWithTimeScopeComponent implements OnInit {
-  @Input() public inputData: Observable<Array<MeasurmentReponse>>;
+  @Input() public inputData: Observable<Array<MeasurementResponse>>;
 
   @Output() public timeWindowChangedEvent: EventEmitter<TimeWindow>;
 

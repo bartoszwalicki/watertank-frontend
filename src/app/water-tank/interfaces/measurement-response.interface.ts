@@ -1,4 +1,4 @@
-export interface MeasurmentReponse {
+export interface MeasurementResponse {
   tankId: number;
   field: string;
   time: Date;

@@ -1,4 +1,4 @@
-export interface LastMeasurmentReponse {
+export interface LastMeasurementResponse {
   tankId: number;
   time: Date;
   waterLevel: number;

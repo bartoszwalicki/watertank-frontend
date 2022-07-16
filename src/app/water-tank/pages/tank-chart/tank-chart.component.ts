@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TimeWindow } from 'api/enums/time-window.enum';
-import { MeasurmentReponse } from 'api/interfaces/measurment-response.interface';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-import { MeasurmentRequest } from '../../interfaces/measurment-request.interface';
-import { MeasurmentsService } from '../../services/measurments/measurments.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MeasurementRequest } from '../../interfaces/measurement-request.interface';
+import { MeasurementResponse } from '../../interfaces/measurement-response.interface';
+import { MeasurementsService } from '../../services/measurements/measurements.service';
 
 @Component({
   selector: 'app-tank-chart',
@@ -13,14 +13,14 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./tank-chart.component.scss'],
 })
 export class TankChartComponent implements OnInit {
-  public waterMeasurmentArray$: Subject<Array<MeasurmentReponse>>;
+  public waterMeasurmentArray$: Subject<Array<MeasurementResponse>>;
   public isLoading: boolean;
 
-  private queryOptions: MeasurmentRequest;
-  private refreshData$: BehaviorSubject<MeasurmentRequest>;
+  private queryOptions: MeasurementRequest;
+  private refreshData$: BehaviorSubject<MeasurementRequest>;
 
   constructor(
-    private measurmentService: MeasurmentsService,
+    private measurementService: MeasurementsService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -39,7 +39,7 @@ export class TankChartComponent implements OnInit {
           this.isLoading = true;
         }),
         switchMap((queryOpt) => {
-          return this.measurmentService.getMeasurment(
+          return this.measurementService.getMeasurment(
             queryOpt.tankId,
             queryOpt.timeWindow
           );

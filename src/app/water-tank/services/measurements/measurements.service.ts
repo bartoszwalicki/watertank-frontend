@@ -3,18 +3,20 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { LastMeasurmentReponse } from 'api/interfaces/last-measurment-response.interface copy';
+import { LastMeasurementResponse } from 'api/interfaces/last-measurement-response.interface';
 import { map } from 'rxjs/operators';
 import { TimeWindow } from '../../enums/time-window.enum';
-import { MeasurmentReponse } from '../../interfaces/measurment-response.interface';
+import { MeasurementResponse } from '../../interfaces/measurement-response.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MeasurmentsService {
+export class MeasurementsService {
   constructor(private httpClient: HttpClient) {}
 
-  public getLastMeasurment(tankId: number): Observable<LastMeasurmentReponse> {
+  public getLastMeasurment(
+    tankId: number
+  ): Observable<LastMeasurementResponse> {
     return this.httpClient
       .get<any>(`/api/lastMetric?tankId=${tankId}`)
       .pipe(
@@ -25,7 +27,7 @@ export class MeasurmentsService {
   public getMeasurment(
     tankId: number,
     timeWindow: TimeWindow = TimeWindow.day
-  ): Observable<Array<MeasurmentReponse>> {
+  ): Observable<Array<MeasurementResponse>> {
     return this.httpClient
       .get<any>(`/api/metrics?tankId=${tankId}&timeWindow=${timeWindow}`)
       .pipe(
@@ -38,8 +40,8 @@ export class MeasurmentsService {
   }
 
   private convertSingleDataToPercentage(
-    meas: LastMeasurmentReponse | MeasurmentReponse
-  ): LastMeasurmentReponse {
+    meas: LastMeasurementResponse | MeasurementResponse
+  ): LastMeasurementResponse {
     const minTankLevel = 2340;
 
     const maxTankLevel = {

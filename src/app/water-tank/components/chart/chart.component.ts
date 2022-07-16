@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MeasurmentReponse } from '../../interfaces/measurment-response.interface';
 import { ChartData } from '../../interfaces/chart-data.interface';
+import { MeasurementResponse } from '../../interfaces/measurement-response.interface';
 
 @Component({
   selector: 'app-chart',
@@ -9,7 +9,7 @@ import { ChartData } from '../../interfaces/chart-data.interface';
   styleUrls: ['./chart.component.scss'],
 })
 export class ChartComponent implements OnInit {
-  @Input() private inputData: Observable<Array<MeasurmentReponse>>;
+  @Input() private inputData: Observable<Array<MeasurementResponse>>;
 
   waterLevelChartData: ChartData[];
   temperatureChartData: ChartData[];

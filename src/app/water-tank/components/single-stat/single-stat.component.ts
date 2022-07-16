@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { LastMeasurmentReponse } from 'api/interfaces/last-measurment-response.interface copy';
+import { Component, Input } from '@angular/core';
+import { LastMeasurementResponse } from 'api/interfaces/last-measurement-response.interface';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -8,5 +8,5 @@ import { Observable } from 'rxjs';
   styleUrls: ['./single-stat.component.scss'],
 })
 export class SingleStatComponent {
-  @Input() singleMeasurment$: Observable<LastMeasurmentReponse>;
+  @Input() singleMeasurement$: Observable<LastMeasurementResponse>;
 }

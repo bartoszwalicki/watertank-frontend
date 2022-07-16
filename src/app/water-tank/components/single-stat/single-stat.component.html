@@ -1,9 +1,12 @@
-<div class="single-stat" *ngIf="singleMeasurment$ | async as measurment">
+<div class="single-stat" *ngIf="singleMeasurement$ | async as measurement">
   <div class="tank-graphic">
-    <div class="water-level" [style.height]="measurment.waterLevel + '%'"></div>
+    <div
+      class="water-level"
+      [style.height]="measurement.waterLevel + '%'"
+    ></div>
   </div>
 
   <div class="text-value">
-    <div class="water-level">{{ measurment.waterLevel }}%</div>
+    <div class="water-level">{{ measurement.waterLevel }}%</div>
   </div>
 </div>

@@ -1,15 +1,15 @@
-import { InfluxDB, FluxTableMetaData } from '@influxdata/influxdb-client';
+import { FluxTableMetaData, InfluxDB } from '@influxdata/influxdb-client';
 
-import { url, token, org } from './env';
+import { org, token, url } from './env';
 
 import { TimeWindow } from './enums/time-window.enum';
-import { MeasurmentReponse } from './interfaces/measurment-response.interface';
+import { MeasurementResponse } from './interfaces/measurement-response.interface';
 
 /**
  * @param tankId  Tank ID, currently available 0 or 1.
  * @param timeWindow Time window.
  *
- * @returns Array of measurment objects
+ * @returns Array of measurement objects
  */
 
 module.exports = (req, res) => {
@@ -35,10 +35,10 @@ module.exports = (req, res) => {
       });
     },
     complete() {
-      const resultTable: Array<MeasurmentReponse> = [];
+      const resultTable: Array<MeasurementResponse> = [];
 
       returnObjects.forEach((meas) => {
-        const singleResult = {} as MeasurmentReponse;
+        const singleResult = {} as MeasurementResponse;
 
         singleResult.tankId = tankId;
         singleResult.time = meas._time ? meas._time : meas._stop;

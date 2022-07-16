@@ -1,7 +1,7 @@
 import { FluxTableMetaData, InfluxDB } from '@influxdata/influxdb-client';
 
 import { org, token, url } from './env';
-import { LastMeasurmentReponse } from './interfaces/last-measurment-response.interface copy';
+import { LastMeasurementResponse } from './interfaces/last-measurement-response.interface';
 
 /**
  * @param tankId  Tank ID, currently available 0 or 1.
@@ -31,7 +31,7 @@ module.exports = (req, res) => {
       });
     },
     complete() {
-      const result = {} as LastMeasurmentReponse;
+      const result = {} as LastMeasurementResponse;
       returnObjects.forEach((meas) => {
         result.tankId = tankId;
         result.time = meas._time;
