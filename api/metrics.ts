@@ -2,6 +2,7 @@ import { FluxTableMetaData, InfluxDB } from '@influxdata/influxdb-client';
 
 import { org, token, url } from './env';
 
+import { VercelRequest, VercelResponse } from '@vercel/node';
 import { TimeWindow } from './enums/time-window.enum';
 import { MeasurementResponse } from './interfaces/measurement-response.interface';
 
@@ -12,9 +13,9 @@ import { MeasurementResponse } from './interfaces/measurement-response.interface
  * @returns Array of measurement objects
  */
 
-module.exports = (req, res) => {
-  const tankId: number = Number.parseInt(req.query.tankId, 10);
-  const timeWindow: TimeWindow = req.query.timeWindow;
+module.exports = (req: VercelRequest, res: VercelResponse) => {
+  const tankId: number = Number.parseInt(req.query.tankId as string, 10);
+  const timeWindow: TimeWindow = req.query.timeWindow as TimeWindow;
 
   const queryApi = new InfluxDB({ url, token }).getQueryApi(org);
   const fluxQuery = buildQuery(timeWindow, tankId);
@@ -42,14 +43,7 @@ module.exports = (req, res) => {
 
         singleResult.tankId = tankId;
         singleResult.time = meas._time ? meas._time : meas._stop;
-        if (meas._field === 'w') {
-          singleResult.field = 'w';
-          singleResult.waterLevel = meas._value;
-        }
-        if (meas._field === 't') {
-          singleResult.field = 't';
-          singleResult.temperature = meas._value;
-        }
+        singleResult.waterLevel = meas._value;
 
         resultTable.push(singleResult);
       });

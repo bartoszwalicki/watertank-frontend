@@ -1,4 +1,5 @@
 import { FluxTableMetaData, InfluxDB } from '@influxdata/influxdb-client';
+import { VercelRequest, VercelResponse } from '@vercel/node';
 
 import { org, token, url } from './env';
 import { LastMeasurementResponse } from './interfaces/last-measurement-response.interface';
@@ -9,8 +10,8 @@ import { LastMeasurementResponse } from './interfaces/last-measurement-response.
  * @returns Last metric
  */
 
-module.exports = (req, res) => {
-  const tankId: number = Number.parseInt(req.query.tankId, 10);
+module.exports = (req: VercelRequest, res: VercelResponse) => {
+  const tankId: number = Number.parseInt(req.query.tankId as string, 10);
 
   const queryApi = new InfluxDB({ url, token }).getQueryApi(org);
   const fluxQuery = buildQuery(tankId);
