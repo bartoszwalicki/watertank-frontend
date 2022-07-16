@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { MeasurmentType } from '../../enums/measurment-type.enum';
+import { LastMeasurmentReponse } from 'api/interfaces/last-measurment-response.interface copy';
+import { map } from 'rxjs/operators';
 import { TimeWindow } from '../../enums/time-window.enum';
 import { MeasurmentReponse } from '../../interfaces/measurment-response.interface';
-import { map } from 'rxjs/operators';
-import { LastMeasurmentReponse } from 'api/interfaces/last-measurment-response.interface copy';
 
 @Injectable({
   providedIn: 'root',
@@ -44,8 +43,8 @@ export class MeasurmentsService {
     const minTankLevel = 2340;
 
     const maxTankLevel = {
-      tank0: 256,
-      tank1: 293,
+      tank0: 650,
+      tank1: 650,
     };
 
     const percentage = Math.floor(

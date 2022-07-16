@@ -35,12 +35,7 @@ module.exports = (req, res) => {
       returnObjects.forEach((meas) => {
         result.tankId = tankId;
         result.time = meas._time;
-        if (meas._field === 'w') {
-          result.waterLevel = meas._value;
-        }
-        if (meas._field === 't') {
-          result.temperature = meas._value;
-        }
+        result.waterLevel = meas._value;
       });
 
       return res.json({
@@ -55,7 +50,7 @@ function buildQuery(tankId: number) {
   |> range(start: -1m)
   |> filter(fn: (r) => r._measurement == "waterlevel")
   |> filter(fn: (r) => r["_field"] == "value")
-  |> filter(fn: (r) => r["watertank"] == "${tankId}")
+  |> filter(fn: (r) => r["watertank"] == "${tankId++}")
   |> last()`;
 
   return query;
