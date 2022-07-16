@@ -59,7 +59,8 @@ function buildQuery(timeWindow: TimeWindow, tankId: number) {
   const query = `from(bucket:"watertank")
   |> range(start: -${timeWindow})
   |> filter(fn: (r) => r._measurement == "waterlevel")
-  |> filter(fn: (r) => r["tank"] == "${tankId}")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["watertank"] == "${tankId}")
   |> aggregateWindow(every: 5m, fn: median, createEmpty: false)
   |> yield(name: "median")`;
 
