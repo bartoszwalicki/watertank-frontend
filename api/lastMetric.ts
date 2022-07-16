@@ -1,6 +1,6 @@
-import { InfluxDB, FluxTableMetaData } from '@influxdata/influxdb-client';
+import { FluxTableMetaData, InfluxDB } from '@influxdata/influxdb-client';
 
-import { url, token, org } from './env';
+import { org, token, url } from './env';
 import { LastMeasurmentReponse } from './interfaces/last-measurment-response.interface copy';
 
 /**
@@ -54,7 +54,8 @@ function buildQuery(tankId: number) {
   const query = `from(bucket:"watertank")
   |> range(start: -1m)
   |> filter(fn: (r) => r._measurement == "waterlevel")
-  |> filter(fn: (r) => r["tank"] == "${tankId}")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> filter(fn: (r) => r["watertank"] == "${tankId}")
   |> last()`;
 
   return query;

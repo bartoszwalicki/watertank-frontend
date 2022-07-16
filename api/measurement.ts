@@ -1,10 +1,26 @@
-import { HttpError, InfluxDB, Point } from '@influxdata/influxdb-client';
+import {
+  HttpError,
+  InfluxDB,
+  Point,
+  PointSettings,
+  WritePrecision,
+} from '@influxdata/influxdb-client';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { bucket, org, token, url } from './env';
 
-module.exports = (req, res) => {
-  const securityCode: number = Number.parseInt(req.query.security, 10);
-  const tank1MeasMm: number = Number.parseInt(req.query.tank1Meas, 10);
-  const tank2MeasMm: number = Number.parseInt(req.query.tank2Meas, 10);
+module.exports = (req: VercelRequest, res: VercelResponse) => {
+  const securityCode: number = Number.parseInt(
+    req.query.security as string,
+    10
+  );
+  const tank1MeasMm: number = Number.parseInt(
+    req.query.tank1Meas as string,
+    10
+  );
+  const tank2MeasMm: number = Number.parseInt(
+    req.query.tank2Meas as string,
+    10
+  );
 
   if (securityCode !== 467467) {
     return res.status(401).json({
@@ -26,9 +42,11 @@ module.exports = (req, res) => {
 function writeInflux(watertankMeas1: number, watertankMeas2: number): void {
   console.log('*** WRITE POINTS ***');
   // create a write API, expecting point timestamps in nanoseconds (can be also 's', 'ms', 'us')
-  const writeApi = new InfluxDB({ url, token }).getWriteApi(org, bucket, 'ns');
-  // setup default tags for all writes through this API
-  writeApi.useDefaultTags({ location: 'vercelFunction' });
+  const writeApi = new InfluxDB({ url, token }).getWriteApi(
+    org,
+    bucket,
+    WritePrecision.ns
+  );
 
   // write point with the current (client-side) timestamp
   const point1 = new Point('waterlevel')
@@ -42,7 +60,7 @@ function writeInflux(watertankMeas1: number, watertankMeas2: number): void {
     .floatField('value', watertankMeas2)
     .timestamp(new Date()); // can be also a number, but in writeApi's precision units (s, ms, us, ns)!
   writeApi.writePoint(point2);
-  console.log(` ${point2.toLineProtocol(writeApi)}`);
+  console.log(` ${point2.toLineProtocol(writeApi as PointSettings)}`);
 
   // WriteApi always buffer data into batches to optimize data transfer to InfluxDB server.
   // writeApi.flush() can be called to flush the buffered data. The data is always written
