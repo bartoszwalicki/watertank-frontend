@@ -1,10 +1,10 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from '@influxdata/influxdb-client/dist/observable';
 import { LastMeasurmentReponse } from 'api/interfaces/last-measurment-response.interface copy';
-import { MeasurmentsService } from '../../services/measurments/measurments.service';
-import { Subject, zip, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject, zip } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { MeasurmentsService } from '../../services/measurments/measurments.service';
 
 @Component({
   selector: 'app-main-stats',
@@ -57,7 +57,7 @@ export class MainStatsComponent implements OnInit {
           this.isLoading = true;
         }),
         switchMap(() => {
-          return zip(this.getSingleMeasurment(0), this.getSingleMeasurment(1));
+          return zip(this.getSingleMeasurment(1), this.getSingleMeasurment(2));
         })
       )
       .subscribe(

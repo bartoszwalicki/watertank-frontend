@@ -50,7 +50,7 @@ function buildQuery(tankId: number) {
   |> range(start: -1m)
   |> filter(fn: (r) => r._measurement == "waterlevel")
   |> filter(fn: (r) => r["_field"] == "value")
-  |> filter(fn: (r) => r["watertank"] == "${tankId++}")
+  |> filter(fn: (r) => r["watertank"] == "${tankId}")
   |> last()`;
 
   return query;
