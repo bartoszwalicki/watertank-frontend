@@ -34,7 +34,7 @@ module.exports = (req: VercelRequest, res: VercelResponse) => {
 };
 
 function writeInflux(watertankMeas1: number, watertankMeas2: number): void {
-  const writeApi = new InfluxDB({ url, token }).getWriteApi(
+  const writeApi = new InfluxDB({ url, token, timeout: 5000 }).getWriteApi(
     org,
     bucket,
     WritePrecision.ns
