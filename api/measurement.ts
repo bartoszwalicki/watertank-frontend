@@ -34,7 +34,7 @@ module.exports = (req: VercelRequest, res: VercelResponse) => {
 };
 
 function writeInflux(watertankMeas1: number, watertankMeas2: number): void {
-  const writeApi = new InfluxDB({ url, token, timeout: 5000 }).getWriteApi(
+  const writeApi = new InfluxDB({ url, token, timeout: 8000 }).getWriteApi(
     org,
     bucket,
     WritePrecision.ns
@@ -44,6 +44,16 @@ function writeInflux(watertankMeas1: number, watertankMeas2: number): void {
     .tag('watertank', '1')
     .floatField('value', watertankMeas1);
   writeApi.writePoint(point1);
+
+  writeApi
+    .close()
+    .then(() => {
+      console.log('Data written to influxdb.');
+    })
+    .catch((e) => {
+      console.error(e);
+    });
+
   const point2 = new Point('waterlevel')
     .tag('watertank', '2')
     .floatField('value', watertankMeas2);
