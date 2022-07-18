@@ -1,7 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from '@influxdata/influxdb-client/dist/observable';
-import { BehaviorSubject, Subject, zip } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, zip } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { LastMeasurementResponse } from '../../interfaces/last-measurement-response.interface';
 import { MeasurementsService } from '../../services/measurements/measurements.service';
