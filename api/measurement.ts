@@ -26,9 +26,11 @@ module.exports = (req: VercelRequest, res: VercelResponse) => {
     `Measurement tank 1 ${tank1MeasMm} mm\n\rMeasurement tank 2 ${tank2MeasMm} mm`
   );
 
-  const writeApi = new InfluxDB({ url, token }).getWriteApi(org, bucket, 'ns');
-
-  console.log(url, token, bucket, org);
+  const writeApi = new InfluxDB({ url, token }).getWriteApi(
+    org,
+    bucket,
+    'ns' as any
+  );
 
   const point1 = new Point('waterlevel')
     .tag('watertank', '1')
