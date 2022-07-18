@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { LastMeasurementResponse } from 'api/interfaces/last-measurement-response.interface';
 import { map } from 'rxjs/operators';
 import { TimeWindow } from '../../enums/time-window.enum';
+import { LastMeasurementResponse } from '../../interfaces/last-measurement-response.interface';
 import { MeasurementResponse } from '../../interfaces/measurement-response.interface';
 
 @Injectable({

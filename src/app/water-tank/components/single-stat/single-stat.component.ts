@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { LastMeasurementResponse } from 'api/interfaces/last-measurement-response.interface';
 import { Observable } from 'rxjs';
+import { LastMeasurementResponse } from '../../interfaces/last-measurement-response.interface';
 
 @Component({
   selector: 'app-single-stat',
