@@ -1,4 +1,4 @@
-import { InfluxDB, Point, WritePrecision } from '@influxdata/influxdb-client';
+import { InfluxDB, Point } from '@influxdata/influxdb-client';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { bucket, org, token, url } from './env';
 
@@ -26,11 +26,7 @@ module.exports = (req: VercelRequest, res: VercelResponse) => {
     `Measurement tank 1 ${tank1MeasMm} mm\n\rMeasurement tank 2 ${tank2MeasMm} mm`
   );
 
-  const writeApi = new InfluxDB({ url, token, timeout: 8000 }).getWriteApi(
-    org,
-    bucket,
-    WritePrecision.ns
-  );
+  const writeApi = new InfluxDB({ url, token }).getWriteApi(org, bucket, 'ns');
 
   console.log(url, token, bucket, org);
 
