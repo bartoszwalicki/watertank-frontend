@@ -49,7 +49,7 @@ export class MeasurementsService {
       tank1: 610,
     };
 
-    const percentage = Math.floor(
+    const percentage = Math.ceil(
       ((meas.waterLevel - minTankLevel) /
         ((meas.tankId === 0 ? maxTankLevel.tank0 : maxTankLevel.tank1) -
           minTankLevel)) *
