@@ -45,8 +45,8 @@ export class MeasurementsService {
     const minTankLevel = 2340;
 
     const maxTankLevel = {
-      tank0: 650,
-      tank1: 650,
+      tank0: 610,
+      tank1: 610,
     };
 
     const percentage = Math.floor(
