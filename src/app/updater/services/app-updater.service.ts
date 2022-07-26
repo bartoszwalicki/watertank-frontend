@@ -11,7 +11,8 @@ export class AppUpdaterService {
     private snackBar: MatSnackBar
   ) {
     this.updates.available.subscribe((event) => {
-      this.showAppUpdateAlert();
+      // this.showAppUpdateAlert();
+      this.doAppUpdate();
     });
   }
 
