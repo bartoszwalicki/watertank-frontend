@@ -39,10 +39,6 @@ export class MainStatsComponent implements OnInit {
     this.refreshData$.next();
   }
 
-  public showCharts(tankId: number): void {
-    this.router.navigate([`chart/${tankId}`]);
-  }
-
   public checkHiddenDocument() {
     if (!document.hidden) {
       this.refreshData();

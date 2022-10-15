@@ -1,14 +1,13 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import localePl from '@angular/common/locales/pl';
 import { registerLocaleData } from '@angular/common';
+import localePl from '@angular/common/locales/pl';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { UpdaterModule } from './updater/updater.module';
@@ -21,7 +20,6 @@ registerLocaleData(localePl, 'pl-PL');
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgxChartsModule,
     BrowserAnimationsModule,
     UpdaterModule,
     ServiceWorkerModule.register('ngsw-worker.js', {

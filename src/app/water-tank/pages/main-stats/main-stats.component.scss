@@ -44,24 +44,3 @@
     line-height: 40px;
   }
 }
-
-.show-charts-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5em;
-  width: auto;
-
-  ::ng-deep {
-    .mat-button-wrapper {
-      display: flex;
-    }
-  }
-
-  mat-icon {
-    width: 40px;
-    height: 40px;
-    font-size: 40px;
-    line-height: 40px;
-  }
-}
